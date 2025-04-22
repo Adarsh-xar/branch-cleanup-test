@@ -5,7 +5,7 @@ on:
     branches:
       - development  # Trigger on pushes to the development branch
   schedule:
-    - cron: '*/5 * * * *'  # Runs every 5 minutes in UTC
+    - cron: '0 * * * *'  # Runs every 1 hour in UTC
   workflow_dispatch:  # Allow manual trigger
 
 permissions:

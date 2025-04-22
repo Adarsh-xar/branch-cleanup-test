@@ -14,10 +14,8 @@ permissions:
 jobs:
   build:
     name: Build
-    runs-on: 
-      group: CricketBazaar
-      labels: arc-runner-set
-
+    runs-on: ubuntu-latest
+      
     steps:
       - name: Docker Login
         uses: docker/login-action@v3.3.0

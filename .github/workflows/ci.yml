@@ -47,6 +47,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           days-before-stale: 60
-          days-before-delete: 0
+          days-before-delete: 1
           dry-run: false
           branches-filter-regex: '^(?!main$|production$|development$).*' #new

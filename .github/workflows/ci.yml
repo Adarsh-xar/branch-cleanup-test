@@ -1,12 +1,21 @@
 name: CI Pipeline
 
 on:
+<<<<<<< HEAD
   push:
     branches:
       - development  # Trigger on pushes to the development branch
   schedule:
     - cron: '*/5 * * * *'  # Runs every 5 minutes in UTC
   workflow_dispatch:  # Allow manual trigger
+=======
+    push:
+      branches: [development]  # Trigger on pushes to main
+    schedule:
+      - cron: '*/5 * * * *'  # Every Sunday at 00:00 UTC
+    workflow_dispatch:  # Allow manual trigger
+  
+>>>>>>> 8d8849ec4b75aee3b9275d6b37ae5ad7ceacde95
 
 permissions:
   contents: write
@@ -29,3 +38,7 @@ jobs:
           dry-run: false
           branches-filter-regex: '^(?!main$|production$|development$).*'
           comment-updates: false
+<<<<<<< HEAD
+=======
+          max-issues: 0
+>>>>>>> 8d8849ec4b75aee3b9275d6b37ae5ad7ceacde95

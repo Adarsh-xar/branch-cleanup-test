@@ -1,39 +1,16 @@
 name: CI Pipeline
 
 on:
-  pull_request:
-    branches: [ "development", "production" ]
-  schedule:
-    - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
-  workflow_dispatch:
+  push:
+    branches: [main]  # Trigger on pushes to main
+#   schedule:
+    # - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
+  workflow_dispatch:  # Allow manual trigger
 
 permissions:
-  contents: write
-  issues: write  # Required if you want to create an issue for stale branches
+  contents: write  # Needed for branch deletion
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-      
-    steps:
-      - name: Docker Login
-        uses: docker/login-action@v3.3.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          push: false
-          provenance: false
-          platforms: linux/arm64
-          tags: ${{ env.IMAGE_TAG }}
-
   delete-stale-branches:
     name: Delete Stale Branches
     runs-on: ubuntu-latest
@@ -46,4 +23,4 @@ jobs:
           days-before-stale: 59
           days-before-delete: 60
           dry-run: false
-          branches-filter-regex: '^(?!main$|production$|development$).*'
+          branches-filter-regex: '^(?!main$|production$|development$).*' 

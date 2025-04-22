@@ -23,4 +23,6 @@ jobs:
           days-before-stale: 59
           days-before-delete: 60
           dry-run: false
-          branches-filter-regex: '^(?!main$|production$|development$).*' 
+          branches-filter-regex: '^(?!main$|production$|development$).*'
+          comment-updates: false
+          max-issues: 0

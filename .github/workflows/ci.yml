@@ -1,0 +1,52 @@
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches: [main]               # Run on push (including empty commits)
+#   schedule:
+#     - cron: '0 0 * * 0'            # Every Sunday at 00:00 UTC
+#   workflow_dispatch:              # Allow manual run
+
+# permissions:
+#   contents: write
+
+# jobs:
+#   delete-old-branches:
+#     name: Delete Branches Older Than 60 Days
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Delete branches older than 60 days
+
+#         uses: phpdocker-io/github-actions-delete-old-branches@v1.1
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           age: 60
+#           dry_run: true  # Will NOT delete, only simulate
+#           ignore_branches: main
+
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]  # Trigger on pushes to main
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write  # Needed for branch deletion
+
+jobs:
+  delete-stale-branches:
+    name: Delete Stale Branches
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete branches inactive for more than 60 days
+        uses: crs-k/stale-branches@v6.0.2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-stale: 60
+          days-before-delete: 0
+          dry-run: false
+          branches-filter-regex: '^(?!main$|production$|development$).*' #new

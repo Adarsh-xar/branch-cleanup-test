@@ -1,14 +1,15 @@
 name: CI Pipeline
 
 on:
-  push:
-    branches: [development]  # Trigger on pushes to main
-#   schedule:
-    # - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
-  workflow_dispatch:  # Allow manual trigger
+    push:
+      branches: [development]  # Trigger on pushes to main
+    schedule:
+      - cron: '*/5 * * * *'  # Every Sunday at 00:00 UTC
+    workflow_dispatch:  # Allow manual trigger
+  
 
 permissions:
-  contents: write  # Needed for branch deletion
+  contents: write
 
 jobs:
   delete-stale-branches:
